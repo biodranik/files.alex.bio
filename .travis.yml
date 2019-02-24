@@ -1,0 +1,30 @@
+if: branch = master
+dist: xenial
+sudo: required
+env:
+  global:
+    - HUGO_RELEASE=0.54.0
+language: node_js # npm is needed to install postcss-cli
+node_js: "lts/*"
+cache: npm
+git:
+  depth: 1
+  submodules_depth: 1
+install:
+  - npm install postcss-cli autoprefixer
+  - wget -q -O hugo.deb https://github.com/gohugoio/hugo/releases/download/v${HUGO_RELEASE}/hugo_extended_${HUGO_RELEASE}_Linux-64bit.deb
+  - sudo dpkg -i hugo.deb
+script:
+  - find content -type d -mindepth 1 -exec touch -a {}/_index.md \; # hugo needs index files to generate 'list' type html
+  - hugo # From version 0.43 hugo automatically creates css files from sass/scss
+deploy:
+  - provider: pages
+    repo: biodranik/files.alex.bio
+    fqdn: files.alex.bio
+    target-branch: gh-pages
+    local-dir: public
+    skip-cleanup: true
+    github-token: $GITHUB_TOKEN # Set in travis-ci.org dashboard, marked secure.
+    keep-history: true
+    on:
+      branch: master

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="{{.Lang}}">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <title>{{block "title" .}}{{.Site.Title}}{{end}}</title>
+  {{ hugo.Generator }}
+  <!-- Always disable robots indexing -->
+  <meta name="robots" content="noindex, nofollow">
+
+  {{ range .Site.Params.css }}
+  {{ $css := resources.Get .}}
+  {{ if in . ".scss" }}
+  {{ $css = $css | toCSS (dict "enableSourceMap" true) }}
+  {{ end }}
+  {{ if eq hugo.Environment "production" }}
+  {{ $css = $css | postCSS (dict "use" "autoprefixer") | minify | fingerprint }}
+  <link rel="stylesheet" href="{{ $css.Permalink }}" integrity="{{ $css.Data.Integrity }}">
+  {{ else }}
+  <link rel="stylesheet" href="{{ $css.Permalink }}">
+  {{ end }}
+  {{ end }}
+
+</head>
+
+<body>
+  <main>
+    {{block "main" .}}
+    {{end}}
+  </main>
+</body>
+
+</html>

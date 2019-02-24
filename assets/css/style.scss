@@ -1,0 +1,25 @@
+$textColor: #111111;
+$backgroundColor: #eeeeee;
+$printBackgroundColor: white;
+$linkColor: rgb(0, 130, 181);
+$visitedLinkColor: rgb(2, 49, 180);
+
+body {
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif, -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI",
+    Roboto, Ubuntu, sans-serif;
+  font-weight: 400;
+  margin: 0;
+  padding: 0;
+  @media not print {
+    background-color: $backgroundColor;
+  }
+  @media print {
+    background-color: $printBackgroundColor;
+  }
+  color: $textColor;
+}
+
+td {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}

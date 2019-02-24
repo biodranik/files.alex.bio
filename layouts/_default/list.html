@@ -1,0 +1,29 @@
+{{ define "main" }}
+{{if not .IsHome}}
+<a href="{{if .Parent.IsHome}}{{.Site.BaseURL}}{{else}}{{.Parent.Permalink}}{{end}}">Back</a>
+{{end}}
+{{- $url := (.Dir | urlize | urls.Parse).Path -}}
+{{- $path := printf "content/%s" .Dir -}}
+{{ $files := where (readDir $path) "Name" "not in" (slice ".DS_Store" "_index.md") }}
+<table>
+  <th>Name</th>
+  <th>Size</th>
+  {{- range $files}}
+  {{if .IsDir}}
+  <tr>
+    <td><a href="{{(.Name | urlize | urls.Parse).Path}}"> {{.Name}}</a></td>
+    <td>DIR</td>
+  </tr>
+  {{end}}
+  {{end}}
+  {{- range $files}}
+  {{if not .IsDir}}
+  <tr>
+    <td><a href="{{.Name}}"> {{.Name}}</a></td>
+    <td>{{if not .IsDir}}{{partial "fileSize" .}}{{end}}</td>
+  </tr>
+  {{- end }}
+  {{- end }}
+</table>
+
+{{ end }}

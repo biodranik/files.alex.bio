@@ -1,0 +1,19 @@
+baseURL: https://files.alex.bio/
+languageCode: en
+defaultContentLanguage: en
+title: "Useful files and documents"
+disableKinds: ["taxonomy", "taxonomyTerm", "RSS", "sitemap", "robotsTXT"]
+copyright: © 2019 Alexander Borsuk, https://alex.bio/
+# Updates .Page.Lastmod from git repo.
+enableGitInfo: true
+disablePathToLower: false
+pluralizeListTitles: false
+
+params:
+  author: Alexander Borsuk
+
+blackfriday:
+  hrefTargetBlank: true
+#mediaTypes:
+#  application/pdf:
+#    suffixes: ["pdf"]

@@ -1,0 +1,5 @@
+{{$l := len (string .Size)}}
+{{- if ge $l 10}}{{div .Size 1000000000}},{{end}}
+{{- if ge $l 7}}{{div (mod .Size 1000000000) 1000000}},{{end}}
+{{- if ge $l 4}}{{div (mod .Size 1000000) 1000}},{{end}}
+{{- mod .Size 1000}}
